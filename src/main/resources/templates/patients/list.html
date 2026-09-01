@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Patients | Sunrise Dental Clinic</title>
+
+    <link rel="stylesheet"
+          href="/css/app.css"
+          th:href="@{/css/app.css}">
+</head>
+
+<body class="application-page">
+
+    <div class="application-shell">
+
+        <aside class="sidebar" id="sidebar">
+
+            <a class="sidebar-brand"
+               th:href="@{/dashboard}">
+
+                <span class="sidebar-brand-mark">SD</span>
+
+                <span>
+                    <strong>Sunrise Dental</strong>
+                    <small>Clinic Management</small>
+                </span>
+            </a>
+
+            <nav class="sidebar-navigation"
+                 aria-label="Main navigation">
+
+                <p class="navigation-label">Clinic workspace</p>
+
+                <a class="navigation-link"
+                   th:href="@{/dashboard}">
+                    Dashboard
+                </a>
+
+                <a class="navigation-link active"
+                   th:href="@{/patients}">
+                    Patients
+                </a>
+
+                <a class="navigation-link"
+                   th:href="@{/appointments}">
+                    Appointments
+                </a>
+
+                <a class="navigation-link"
+                   th:href="@{/billing}">
+                    Billing
+                </a>
+
+                <a class="navigation-link"
+                   th:href="@{/reports}">
+                    Reports
+                </a>
+
+                <p class="navigation-label">System</p>
+
+                <a class="navigation-link"
+                   th:href="@{/help}">
+                    Help
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <small>Signed in securely</small>
+                <p>Authorised clinic staff</p>
+
+                <form th:action="@{/logout}"
+                      method="post">
+
+                    <button class="button button-secondary"
+                            type="submit">
+                        Sign out
+                    </button>
+                </form>
+            </div>
+
+        </aside>
+
+        <div class="main-area">
+
+            <header class="topbar">
+
+                <button class="mobile-menu-button"
+                        id="mobile-menu-button"
+                        type="button"
+                        aria-controls="sidebar"
+                        aria-expanded="false">
+                    Menu
+                </button>
+
+                <div class="topbar-heading">
+                    <p>Patient administration</p>
+                    <h1>Patient records</h1>
+                </div>
+
+                <a class="button button-primary"
+                   th:href="@{/patients/new}">
+                    Register patient
+                </a>
+
+            </header>
+
+            <main class="dashboard-content">
+
+                <div class="alert alert-success"
+                     role="status"
+                     th:if="${successMessage}"
+                     th:text="${successMessage}">
+                </div>
+
+                <section class="page-heading">
+
+                    <div>
+                        <p class="eyebrow">Patient management</p>
+
+                        <h2>Registered clinic patients</h2>
+
+                        <p>
+                            Search, view and maintain secure patient
+                            registration information.
+                        </p>
+                    </div>
+
+                    <div class="record-count">
+                        <strong th:text="${patientCount}">0</strong>
+                        <span>Active patients</span>
+                    </div>
+
+                </section>
+
+                <section class="content-card">
+
+                    <div class="content-card-header">
+
+                        <div>
+                            <h3>Patient directory</h3>
+
+                            <p>
+                                Search by patient number, name,
+                                contact number or email address.
+                            </p>
+                        </div>
+
+                        <form class="search-form"
+                              th:action="@{/patients}"
+                              method="get">
+
+                            <label class="visually-hidden"
+                                   for="patient-search">
+                                Search patients
+                            </label>
+
+                            <input id="patient-search"
+                                   name="search"
+                                   type="search"
+                                   th:value="${searchText}"
+                                   placeholder="Search patient records">
+
+                            <button class="button button-secondary"
+                                    type="submit">
+                                Search
+                            </button>
+
+                            <a class="button button-text"
+                               th:if="${searchText != null
+                                      and !searchText.isBlank()}"
+                               th:href="@{/patients}">
+                                Clear
+                            </a>
+                        </form>
+
+                    </div>
+
+                    <div class="table-wrapper"
+                         th:if="${!patients.isEmpty()}">
+
+                        <table class="data-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Patient number</th>
+                                    <th>Patient</th>
+                                    <th>Contact</th>
+                                    <th>Gender</th>
+                                    <th>Registered</th>
+                                    <th>Status</th>
+                                    <th>
+                                        <span class="visually-hidden">
+                                            Actions
+                                        </span>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr th:each="patient : ${patients}">
+
+                                    <td>
+                                        <strong
+                                            th:text="${patient.patientNumber}">
+                                            PAT-0001
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        <div class="table-primary">
+                                            <strong
+                                                th:text="${patient.fullName}">
+                                                Patient name
+                                            </strong>
+
+                                            <small
+                                                th:text="${patient.email != null
+                                                    and !patient.email.isBlank()
+                                                    ? patient.email
+                                                    : 'No email provided'}">
+                                                Email
+                                            </small>
+                                        </div>
+                                    </td>
+
+                                    <td th:text="${patient.contactNumber}">
+                                        Contact number
+                                    </td>
+
+                                    <td th:text="${patient.gender}">
+                                        Gender
+                                    </td>
+
+                                    <td th:text="${patient.registeredAt != null
+                                        ? #temporals.format(
+                                            patient.registeredAt,
+                                            'dd MMM yyyy')
+                                        : '-'}">
+                                        Date
+                                    </td>
+
+                                    <td>
+                                        <span class="status-badge status-active">
+                                            Active
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <div class="table-actions">
+
+                                            <a th:href="@{/patients/{id}(
+                                                    id=${patient.id})}">
+                                                View
+                                            </a>
+
+                                            <a th:href="@{/patients/{id}/edit(
+                                                    id=${patient.id})}">
+                                                Edit
+                                            </a>
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="empty-state"
+                         th:if="${patients.isEmpty()}">
+
+                        <div class="empty-state-symbol"
+                             aria-hidden="true">
+                            P
+                        </div>
+
+                        <h3>No patients found</h3>
+
+                        <p th:if="${searchText != null
+                                  and !searchText.isBlank()}">
+                            No patient records matched your search.
+                            Try another name, number or contact detail.
+                        </p>
+
+                        <p th:unless="${searchText != null
+                                      and !searchText.isBlank()}">
+                            Register the first patient to begin
+                            managing clinic records.
+                        </p>
+
+                        <a class="button button-primary"
+                           th:href="@{/patients/new}">
+                            Register patient
+                        </a>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="/js/app.js"
+            th:src="@{/js/app.js}"></script>
+
+</body>
+</html>

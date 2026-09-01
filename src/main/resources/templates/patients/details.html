@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Patient Details | Sunrise Dental Clinic</title>
+
+    <link rel="stylesheet"
+          href="/css/app.css"
+          th:href="@{/css/app.css}">
+</head>
+
+<body class="application-page">
+
+    <div class="application-shell">
+
+        <aside class="sidebar" id="sidebar">
+
+            <a class="sidebar-brand"
+               th:href="@{/dashboard}">
+
+                <span class="sidebar-brand-mark">SD</span>
+
+                <span>
+                    <strong>Sunrise Dental</strong>
+                    <small>Clinic Management</small>
+                </span>
+            </a>
+
+            <nav class="sidebar-navigation"
+                 aria-label="Main navigation">
+
+                <p class="navigation-label">Clinic workspace</p>
+
+                <a class="navigation-link"
+                   th:href="@{/dashboard}">
+                    Dashboard
+                </a>
+
+                <a class="navigation-link active"
+                   th:href="@{/patients}">
+                    Patients
+                </a>
+
+                <a class="navigation-link"
+                   th:href="@{/appointments}">
+                    Appointments
+                </a>
+
+                <a class="navigation-link"
+                   th:href="@{/billing}">
+                    Billing
+                </a>
+
+                <a class="navigation-link"
+                   th:href="@{/reports}">
+                    Reports
+                </a>
+
+                <p class="navigation-label">System</p>
+
+                <a class="navigation-link"
+                   th:href="@{/help}">
+                    Help
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <small>Signed in securely</small>
+                <p>Authorised clinic staff</p>
+
+                <form th:action="@{/logout}"
+                      method="post">
+
+                    <button class="button button-secondary"
+                            type="submit">
+                        Sign out
+                    </button>
+                </form>
+
+            </div>
+
+        </aside>
+
+        <div class="main-area">
+
+            <header class="topbar">
+
+                <button class="mobile-menu-button"
+                        id="mobile-menu-button"
+                        type="button"
+                        aria-controls="sidebar"
+                        aria-expanded="false">
+                    Menu
+                </button>
+
+                <div class="topbar-heading">
+                    <p>Patient administration</p>
+                    <h1>Patient details</h1>
+                </div>
+
+                <div class="page-actions">
+
+                    <a class="button button-secondary"
+                       th:href="@{/patients}">
+                        Patient directory
+                    </a>
+
+                    <a class="button button-primary"
+                       th:href="@{/patients/{id}/edit(
+                               id=${patient.id})}">
+                        Edit patient
+                    </a>
+
+                </div>
+
+            </header>
+
+            <main class="dashboard-content">
+
+                <section class="page-heading">
+
+                    <div>
+                        <p class="eyebrow">Patient record</p>
+
+                        <h2 th:text="${patient.fullName}">
+                            Patient name
+                        </h2>
+
+                        <p>
+                            Review the patient's registration,
+                            contact and medical information.
+                        </p>
+                    </div>
+
+                    <div class="record-count">
+
+                        <strong
+                            th:text="${patient.patientNumber}">
+                            PAT-0001
+                        </strong>
+
+                        <span>Patient number</span>
+
+                    </div>
+
+                </section>
+
+                <section class="details-grid">
+
+                    <article class="detail-item">
+
+                        <span>Full name</span>
+
+                        <strong th:text="${patient.fullName}">
+                            Patient name
+                        </strong>
+
+                    </article>
+
+                    <article class="detail-item">
+
+                        <span>Status</span>
+
+                        <strong th:if="${patient.active}"
+                                class="status-badge status-active">
+                            Active
+                        </strong>
+
+                        <strong th:unless="${patient.active}"
+                                class="status-badge status-inactive">
+                            Inactive
+                        </strong>
+
+                    </article>
+
+                    <article class="detail-item">
+
+                        <span>Contact number</span>
+
+                        <strong th:text="${patient.contactNumber}">
+                            Contact number
+                        </strong>
+
+                    </article>
+
+                    <article class="detail-item">
+
+                        <span>Email address</span>
+
+                        <strong th:text="${patient.email != null
+                                and !patient.email.isBlank()
+                                ? patient.email
+                                : 'Not provided'}">
+                            Email
+                        </strong>
+
+                    </article>
+
+                    <article class="detail-item">
+
+                        <span>Date of birth</span>
+
+                        <strong th:text="${patient.dateOfBirth != null
+                                ? #temporals.format(
+                                    patient.dateOfBirth,
+                                    'dd MMMM yyyy')
+                                : 'Not provided'}">
+                            Date of birth
+                        </strong>
+
+                    </article>
+
+                    <article class="detail-item">
+
+                        <span>Gender</span>
+
+                        <strong th:text="${patient.gender}">
+                            Gender
+                        </strong>
+
+                    </article>
+
+                    <article class="detail-item detail-item-full">
+
+                        <span>Residential address</span>
+
+                        <p th:text="${patient.address}">
+                            Address
+                        </p>
+
+                    </article>
+
+                    <article class="detail-item detail-item-full">
+
+                        <span>Medical notes</span>
+
+                        <p th:text="${patient.medicalNotes != null
+                                and !patient.medicalNotes.isBlank()
+                                ? patient.medicalNotes
+                                : 'No medical notes recorded.'}">
+                            Medical notes
+                        </p>
+
+                    </article>
+
+                    <article class="detail-item">
+
+                        <span>Registered</span>
+
+                        <strong th:text="${patient.registeredAt != null
+                                ? #temporals.format(
+                                    patient.registeredAt,
+                                    'dd MMM yyyy, HH:mm')
+                                : '-'}">
+                            Registration date
+                        </strong>
+
+                    </article>
+
+                    <article class="detail-item">
+
+                        <span>Last updated</span>
+
+                        <strong th:text="${patient.updatedAt != null
+                                ? #temporals.format(
+                                    patient.updatedAt,
+                                    'dd MMM yyyy, HH:mm')
+                                : '-'}">
+                            Updated date
+                        </strong>
+
+                    </article>
+
+                </section>
+
+                <section class="danger-zone"
+                         th:if="${patient.active}">
+
+                    <div>
+                        <h3>Deactivate patient record</h3>
+
+                        <p>
+                            The record will be retained for history,
+                            but it will no longer appear in active
+                            patient searches.
+                        </p>
+                    </div>
+
+                    <form th:action="@{/patients/{id}/deactivate(
+                            id=${patient.id})}"
+                          method="post"
+                          onsubmit="return confirm(
+                              'Deactivate this patient record?');">
+
+                        <button class="button button-danger"
+                                type="submit">
+                            Deactivate patient
+                        </button>
+
+                    </form>
+
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="/js/app.js"
+            th:src="@{/js/app.js}"></script>
+
+</body>
+</html>
