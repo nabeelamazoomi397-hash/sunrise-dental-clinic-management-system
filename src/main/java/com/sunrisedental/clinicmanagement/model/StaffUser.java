@@ -50,7 +50,7 @@ public class StaffUser {
         name = "employee_number",
         nullable = false,
         unique = true,
-        length = 20
+        length = 30
     )
     private String employeeNumber;
 
@@ -83,9 +83,6 @@ public class StaffUser {
     @Column(nullable = false, length = 25)
     private Role role;
 
-    /**
-     * Links a DENTIST login to its professional dentist record.
-     */
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dentist_id", unique = true)
     private Dentist dentist;
