@@ -40,7 +40,6 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Patient number is required")
     @Column(name = "patient_number", nullable = false, unique = true, length = 25)
     private String patientNumber;
 
@@ -92,7 +91,7 @@ public class Patient {
     /**
      * Required by JPA when reconstructing a patient from the database.
      */
-    protected Patient() {
+    public Patient() {
     }
 
     /**
