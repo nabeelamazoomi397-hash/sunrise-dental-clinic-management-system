@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Sunrise Dental Clinic</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+</head>
+
+<body class="application-page">
+
+    <div class="application-shell">
+
+        <aside class="sidebar"
+       id="sidebar">
+
+            <a class="sidebar-brand"
+               th:href="@{/dashboard}">
+
+                <span class="sidebar-brand-mark">SD</span>
+
+                <span>
+                    <strong>Sunrise Dental</strong>
+                    <small>Clinic Management</small>
+                </span>
+            </a>
+
+            <nav class="sidebar-navigation"
+                 aria-label="Main navigation">
+
+                <p class="navigation-label">Workspace</p>
+
+                <a class="navigation-link active"
+                   th:href="@{/dashboard}">
+                    <span aria-hidden="true">⌂</span>
+                    Dashboard
+                </a>
+
+                <a class="navigation-link"
+                   th:href="@{/patients}">
+                    <span aria-hidden="true">♙</span>
+                    Patients
+                </a>
+
+                <a class="navigation-link"
+                   th:href="@{/appointments}">
+                    <span aria-hidden="true">□</span>
+                    Appointments
+                </a>
+
+                <a class="navigation-link"
+                   th:href="@{/billing}">
+                    <span aria-hidden="true">₨</span>
+                    Billing
+                </a>
+
+                <p class="navigation-label">
+                    Management
+                </p>
+
+                <a class="navigation-link"
+                   th:href="@{/dentists}">
+                    <span aria-hidden="true">✚</span>
+                    Dentists
+                </a>
+
+                <a class="navigation-link"
+                   th:href="@{/treatments}">
+                    <span aria-hidden="true">◇</span>
+                    Treatments
+                </a>
+
+                <a class="navigation-link"
+                   th:href="@{/reports}">
+                    <span aria-hidden="true">▥</span>
+                    Reports
+                </a>
+
+                <a class="navigation-link"
+                   th:href="@{/help}">
+                    <span aria-hidden="true">?</span>
+                    Help
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Sunrise Dental Clinic</p>
+                <small>Colombo, Sri Lanka</small>
+            </div>
+        </aside>
+
+        <div class="main-area">
+
+            <header class="topbar">
+
+                <button class="mobile-menu-button"
+                        type="button"
+                        id="mobile-menu-button"
+                        aria-label="Open navigation"
+                        aria-controls="sidebar"
+                        aria-expanded="false">
+                    ☰
+                </button>
+
+                <div class="topbar-heading">
+                    <p>Clinic workspace</p>
+                    <h1>Dashboard</h1>
+                </div>
+
+                <div class="user-menu">
+
+                    <div class="user-avatar"
+                         aria-hidden="true"
+                         th:text="${#strings.substring(username, 0, 1).toUpperCase()}">
+                        A
+                    </div>
+
+                    <div class="user-details">
+                        <strong th:text="${username}">
+                            administrator
+                        </strong>
+
+                        <small th:text="${authorities}">
+                            ROLE_ADMIN
+                        </small>
+                    </div>
+
+                    <form th:action="@{/logout}"
+                          method="post">
+
+                        <button class="button button-secondary"
+                                type="submit">
+                            Sign out
+                        </button>
+                    </form>
+                </div>
+            </header>
+
+            <main class="dashboard-content">
+
+                <section class="welcome-banner">
+
+                    <div>
+                        <p class="eyebrow">
+                            Sunrise Dental Clinic
+                        </p>
+
+                        <h2>
+                            Welcome,
+                            <span th:text="${username}">
+                                administrator
+                            </span>
+                        </h2>
+
+                        <p>
+                            Manage today’s clinic activities,
+                            patient care and financial records
+                            from this secure workspace.
+                        </p>
+                    </div>
+
+                    <a class="button button-light"
+                       th:href="@{/appointments/new}">
+                        Create appointment
+                    </a>
+                </section>
+
+                <section aria-labelledby="quick-actions-heading">
+
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">
+                                Common activities
+                            </p>
+
+                            <h2 id="quick-actions-heading">
+                                Quick actions
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="quick-action-grid">
+
+                        <a class="quick-action-card"
+                           th:href="@{/patients/new}">
+
+                            <span class="action-icon">P</span>
+
+                            <div>
+                                <h3>Register patient</h3>
+                                <p>
+                                    Add a new patient and
+                                    contact information.
+                                </p>
+                            </div>
+
+                            <span class="card-arrow">→</span>
+                        </a>
+
+                        <a class="quick-action-card"
+                           th:href="@{/appointments/new}">
+
+                            <span class="action-icon">A</span>
+
+                            <div>
+                                <h3>Book appointment</h3>
+                                <p>
+                                    Select a patient, dentist,
+                                    treatment, date and time.
+                                </p>
+                            </div>
+
+                            <span class="card-arrow">→</span>
+                        </a>
+
+                        <a class="quick-action-card"
+                           th:href="@{/appointments/search}">
+
+                            <span class="action-icon">S</span>
+
+                            <div>
+                                <h3>Find appointment</h3>
+                                <p>
+                                    Search using the unique
+                                    appointment number.
+                                </p>
+                            </div>
+
+                            <span class="card-arrow">→</span>
+                        </a>
+
+                        <a class="quick-action-card"
+                           th:href="@{/billing}">
+
+                            <span class="action-icon">B</span>
+
+                            <div>
+                                <h3>Billing</h3>
+                                <p>
+                                    Generate bills and record
+                                    patient payments.
+                                </p>
+                            </div>
+
+                            <span class="card-arrow">→</span>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="system-overview"
+                         aria-labelledby="overview-heading">
+
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">
+                                System modules
+                            </p>
+
+                            <h2 id="overview-heading">
+                                Clinic overview
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="overview-grid">
+
+                        <article class="overview-card">
+                            <span>01</span>
+                            <h3>Patient records</h3>
+                            <p>
+                                Maintain accurate personal,
+                                contact and medical information.
+                            </p>
+                        </article>
+
+                        <article class="overview-card">
+                            <span>02</span>
+                            <h3>Smart scheduling</h3>
+                            <p>
+                                Prevent past, Sunday and
+                                overlapping appointments.
+                            </p>
+                        </article>
+
+                        <article class="overview-card">
+                            <span>03</span>
+                            <h3>Billing control</h3>
+                            <p>
+                                Calculate charges, discounts,
+                                balances and payment status.
+                            </p>
+                        </article>
+
+                        <article class="overview-card">
+                            <span>04</span>
+                            <h3>Secure auditing</h3>
+                            <p>
+                                Preserve traceable records of
+                                important staff activities.
+                            </p>
+                        </article>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

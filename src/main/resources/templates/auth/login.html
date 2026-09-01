@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Staff Login | Sunrise Dental Clinic</title>
+
+    <link rel="stylesheet" href="/css/app.css" th:href="@{/css/app.css}">
+</head>
+
+<body class="login-page">
+
+    <main class="login-layout">
+
+        <section class="login-information"
+                 aria-labelledby="clinic-heading">
+
+            <div class="brand">
+                <div class="brand-mark"
+                     aria-hidden="true">
+                    SD
+                </div>
+
+                <div>
+                    <p class="brand-name">
+                        Sunrise Dental Clinic
+                    </p>
+
+                    <p class="brand-location">
+                        Colombo, Sri Lanka
+                    </p>
+                </div>
+            </div>
+
+            <div class="login-introduction">
+                <p class="eyebrow">
+                    Clinic Management System
+                </p>
+
+                <h1 id="clinic-heading">
+                    Better care begins with organised information.
+                </h1>
+
+                <p>
+                    Securely manage patients, appointments,
+                    treatments, billing and clinic reports
+                    from one system.
+                </p>
+            </div>
+
+            <ul class="feature-list">
+                <li>Secure role-based staff access</li>
+                <li>Appointment conflict prevention</li>
+                <li>Accurate billing and payment tracking</li>
+                <li>Auditable clinic activity records</li>
+            </ul>
+
+        </section>
+
+        <section class="login-panel">
+
+            <div class="login-card">
+
+                <div class="login-card-heading">
+                    <p class="eyebrow">Staff portal</p>
+
+                    <h2>Welcome back</h2>
+
+                    <p>
+                        Enter your staff username and
+                        password to continue.
+                    </p>
+                </div>
+
+                <div class="alert alert-error"
+                     role="alert"
+                     th:if="${param.error}">
+                    The username or password is incorrect,
+                    or the account is unavailable.
+                </div>
+
+                <div class="alert alert-success"
+                     role="status"
+                     th:if="${param.logout}">
+                    You have been signed out successfully.
+                </div>
+
+                <div class="alert alert-warning"
+                     role="alert"
+                     th:if="${param.expired}">
+                    Your session expired because the account
+                    was used in another browser.
+                </div>
+
+                <form class="login-form"
+                      th:action="@{/login}"
+                      method="post">
+
+                    <div class="form-group">
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <input id="username"
+                               name="username"
+                               type="text"
+                               maxlength="50"
+                               autocomplete="username"
+                               placeholder="Enter your username"
+                               required
+                               autofocus>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="password-field">
+                            <input id="password"
+                                   name="password"
+                                   type="password"
+                                   autocomplete="current-password"
+                                   placeholder="Enter your password"
+                                   required>
+
+                            <button class="password-toggle"
+                                    type="button"
+                                    id="password-toggle"
+                                    aria-controls="password"
+                                    aria-pressed="false">
+                                Show
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="button button-primary"
+                            type="submit">
+                        Sign in securely
+                    </button>
+
+                </form>
+
+                <p class="security-note">
+                    Access is restricted to authorised clinic staff.
+                    Activity may be recorded for security and auditing.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+ <script src="/js/app.js" th:src="@{/js/app.js}"></script>
+
+</body>
+</html>
